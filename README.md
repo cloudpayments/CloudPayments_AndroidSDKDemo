@@ -20,13 +20,14 @@ java.lang.String ru.cloudpayments.sdk.Card.getType(java.lang.String number);
 ```
 * шифровать карточные данные и создавать криптограмму для отправки на сервер
 ```
-public java.lang.String cardCryptogram(java.lang.String publicId) throws java.io.UnsupportedEncodingException,                                   javax.crypto.NoSuchPaddingException, java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException,                  javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException, java.security.InvalidKeyException;
+java.lang.String ru.cloudpayments.sdk.Card.cardCryptogram(java.lang.String publicId) throws                                                      java.io.UnsupportedEncodingException, javax.crypto.NoSuchPaddingException, java.security.NoSuchAlgorithmException,                   java.security.NoSuchProviderException, javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException,                     java.security.InvalidKeyException;
 ```
 ##Проведение оплаты
 
 ###Пример использования SDK и API CloudPayments 
 
 В примере publicId и passApi это тестовые реквизиты для подключения и вам нужно получить их в личном кабинете на сайте CloudPayments.
+
 Пример отправки запроса на списание средств с банковской карты через 3ds:
 ```
 new ChargeTask(android.support.v4.app.FragmentActivity activity, 
