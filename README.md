@@ -12,42 +12,27 @@ git clone https://github.com/cloudpayments/CloudPayments_AndroidSDKDemo.git
 SDK CloudPayments (CloudPaymentsAPI.framework) позволяет:
 * проводить проверку карточного номера на корректность  
 ```    
-boolean ru.cloudpayments.sdk.Card. isValidNumber(java.lang.String number);
+boolean ru.cloudpayments.sdk.Card.isValidNumber(java.lang.String number);
 ```
 * определять тип платежной системы
 ```
-int ru.cloudpayments.sdk.CardType.getType(java.lang.String creditCardNumberPart);
+java.lang.String ru.cloudpayments.sdk.Card.getType(java.lang.String number);
 ```
-* шифрует карточные данные, создает криптограмму и отправляет запрос на сервер 
+* шифровать карточные данные и создавать криптограмму для отправки на сервер
 ```
-new ru.cloudpayments.sdk.ChargeTask(android.support.v4.app.FragmentActivity activity, 
-            java.lang.String accountId, 
-            java.lang.String invoiceId, 
-            java.lang.String cardNumber, 
-            java.lang.String cardExp, 
-            java.lang.String cardCvv, 
-            java.lang.String cardHolderName, 
-            double amount, 
-            java.lang.String currency, 
-            java.lang.String desc, 
-            java.lang.String termUrl, ru.cloudpayments.demo.ChargeTaskListener chargeTaskListener).execute();
+public java.lang.String cardCryptogram(java.lang.String publicId) throws java.io.UnsupportedEncodingException,                                   javax.crypto.NoSuchPaddingException, java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException,                  javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException, java.security.InvalidKeyException;
 ```
 ##Проведение оплаты
 
 ###Пример использования SDK и API CloudPayments 
 
-Для начала нужно инициализировать сессию при помощи вашего publicId и passApi из личного кабинета CloudPayments:
-```
-CloudPaymentsSession.init("pk_348c635ba69b355d6f4dc75a4a205", "02a16349d37b79838a1d0310e21bd369");
-```
+В примере publicId и passApi это тестовые реквизиты для подключения и вам нужно получить их в личном кабинете на сайте CloudPayments.
 Пример отправки запроса на списание средств с банковской карты через 3ds:
 ```
 new ChargeTask(android.support.v4.app.FragmentActivity activity, 
             java.lang.String accountId, 
             java.lang.String invoiceId, 
-            java.lang.String cardNumber, 
-            java.lang.String cardExp, 
-            java.lang.String cardCvv, 
+            java.lang.String cardCryptogram, 
             java.lang.String cardHolderName, 
             double amount, 
             java.lang.String currency, 
