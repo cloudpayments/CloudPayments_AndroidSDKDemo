@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CloudPayments Android SDK Demo</string>
+
+    <string name="attention">Attention</string>
+    <string name="success">Success</string>
+    <string name="error">Error</string>
+    <string name="card_number">Card number</string>
+    <string name="card_exp">Expired date</string>
+    <string name="card_holder_name">Card holder name</string>
+    <string name="card_cvv">CVV</string>
+    <string name="card_number_hint">****************</string>
+    <string name="card_exp_hint">mmyy</string>
+    <string name="card_holder_name_hint">HOLDER NAME</string>
+    <string name="card_cvv_hint">***</string>
+    <string name="payment">Payment</string>
+
+    <string name="enter_card_number">Enter card number</string>
+    <string name="enter_exp">Enter expired date</string>
+    <string name="enter_cvv">Enter CVV</string>
+    <string name="enter_card_holder_name">Enter card holder name</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="enter_desc">Enter description</string>
+    <string name="amount">Amount</string>
+    <string name="desc">Description</string>
+    <string name="amount_hint">0</string>
+    <string name="desc_hint">Description</string>
+</resources>
