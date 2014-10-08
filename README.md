@@ -26,7 +26,7 @@ java.lang.String ru.cloudpayments.sdk.Card.cardCryptogram(java.lang.String publi
 
 ###Пример использования SDK и API CloudPayments 
 
-В примере publicId и passApi это тестовые реквизиты для подключения и вам нужно получить их в личном кабинете на сайте CloudPayments.
+В примере publicId и passApi это тестовые реквизиты для подключения, Вам нужно получить их в личном кабинете на сайте CloudPayments.
 
 Пример отправки запроса на списание средств с банковской карты через 3ds:
 ```
