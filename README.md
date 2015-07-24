@@ -26,20 +26,73 @@ java.lang.String ru.cloudpayments.sdk.Card.cardCryptogram(java.lang.String publi
 
 ###Пример использования SDK и API CloudPayments 
 
-В примере publicId и passApi это тестовые реквизиты для подключения, Вам нужно получить их в личном кабинете на сайте CloudPayments.
+К проекту нужно подлючить следующие зависимости:
+
+libs/CloudPayments_AndroidSDK.aar // CloudPayments Sdk
+org.codehaus.jackson:jackson-core-asl:1.9.11
+org.codehaus.jackson:jackson-jaxrs:1.9.11
+org.codehaus.jackson:jackson-mapper-asl:1.9.11
+
+подробнее см. build.gradle.
+
+В примере publicId это тестовые реквизиты для подключения, Вам нужно получить их в личном кабинете на сайте CloudPayments.
 
 Пример отправки запроса на списание средств с банковской карты через 3ds:
 ```
-new ChargeTask(android.support.v4.app.FragmentActivity activity, 
-            java.lang.String accountId, 
-            java.lang.String invoiceId, 
-            java.lang.String cardCryptogram, 
-            java.lang.String cardHolderName, 
-            double amount, 
-            java.lang.String currency, 
-            java.lang.String desc, 
-            java.lang.String termUrl, ru.cloudpayments.demo.ChargeTaskListener chargeTaskListener).execute();                
+        Intent intent = new Intent(Launcher.this, PaymentWidget.class);
+        PaymentWidget.listener = chargeTaskListener;
+        intent.putExtra("amount", amount);
+        intent.putExtra("desc", desc);
+        intent.putExtra("currency", currency);
+        intent.putExtra("publicId", publicId);
+        intent.putExtra("invoiceId", invoiceId);
+        intent.putExtra("accountId", accountId);
+        startActivity(intent);
 ```
+
+где
+```        
+        private ChargeTaskListener chargeTaskListener = new ChargeTaskListener() {
+                @Override
+                public void success(BaseResponse baseResponse) {
+                    // успешно 
+                    // baseResponse instanceof CardsAuthConfirmResponse - оплата 3ds
+                    // baseResponse instanceof CardsAuthResponse
+                }
+        
+                @Override
+                public void error(BaseResponse baseResponse) {
+                    // ошибка
+                }
+        
+                @Override
+                public void cancel() {
+                    // отменено пользователем
+                }
+            };
+```
+
+Описание успешного ответа
+```
+        public class CardsAuthConfirmResponse extends BaseResponse {
+            public CardTransaction transaction;
+        }
+        
+        public class CardsAuthResponse extends BaseResponse {
+            public CardAuth auth;
+        }
+        
+        public class CardTransaction {
+            public int transactionId;        // Id операции
+            public String cardHolderMessage; // Сообщение о операции
+        }
+        
+        public class CardAuth extends CardTransaction {
+            public int transactionId;        // Id операции
+            public String cardHolderMessage; // Сообщение о операции
+        }
+```
+
 ##Ключевые моменты
 
 В демо-проекте частично используется код из библиотеки https://github.com/LivotovLabs/3DSView. Все права на код этой библиотеки принадлежат авторам библиотеки.

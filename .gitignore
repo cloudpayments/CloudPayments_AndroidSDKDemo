@@ -1,0 +1,17 @@
+*classpath*
+*/.idea/
+*.idea/
+*/lib/
+*/bin/
+*/out/
+*/gen/
+*/build/
+*/gradle/
+*build/
+*.project
+*.settings
+*.iml
+local.properties
+.gradle
+gradlew*
+manifest-merger-release-report.txt
