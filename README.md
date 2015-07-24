@@ -28,10 +28,12 @@ java.lang.String ru.cloudpayments.sdk.Card.cardCryptogram(java.lang.String publi
 
 К проекту нужно подлючить следующие зависимости:
 
+```
 libs/CloudPayments_AndroidSDK.aar // CloudPayments Sdk
 org.codehaus.jackson:jackson-core-asl:1.9.11
 org.codehaus.jackson:jackson-jaxrs:1.9.11
 org.codehaus.jackson:jackson-mapper-asl:1.9.11
+```
 
 подробнее см. build.gradle.
 
