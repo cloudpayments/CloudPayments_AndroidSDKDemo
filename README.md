@@ -12,15 +12,18 @@ git clone https://github.com/cloudpayments/CloudPayments_AndroidSDKDemo.git
 SDK CloudPayments (CloudPaymentsAPI.framework) позволяет:
 * проводить проверку карточного номера на корректность  
 ```    
-boolean ru.cloudpayments.sdk.Card.isValidNumber(java.lang.String number);
+ru.cloudpayments.sdk.ICard card = ru.cloudpayments.sdk.CardFactory.create(java.lang.String number);
+boolean card.isValidNumber();
 ```
 * определять тип платежной системы
 ```
-java.lang.String ru.cloudpayments.sdk.Card.getType(java.lang.String number);
+ru.cloudpayments.sdk.ICard card = ru.cloudpayments.sdk.CardFactory.create(java.lang.String number);
+java.lang.String card.getType();
 ```
 * шифровать карточные данные и создавать криптограмму для отправки на сервер
 ```
-java.lang.String ru.cloudpayments.sdk.Card.cardCryptogram(java.lang.String publicId) throws                                                      java.io.UnsupportedEncodingException, javax.crypto.NoSuchPaddingException, java.security.NoSuchAlgorithmException,                   java.security.NoSuchProviderException, javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException,                     java.security.InvalidKeyException;
+ru.cloudpayments.sdk.ICard card = ru.cloudpayments.sdk.CardFactory.create(java.lang.String number);
+java.lang.String card.cardCryptogram(java.lang.String publicId) throws                                                      java.io.UnsupportedEncodingException, javax.crypto.NoSuchPaddingException, java.security.NoSuchAlgorithmException,                   java.security.NoSuchProviderException, javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException,                     java.security.InvalidKeyException;
 ```
 ##Проведение оплаты
 
@@ -39,7 +42,7 @@ org.codehaus.jackson:jackson-mapper-asl:1.9.11
 
 В примере publicId это тестовые реквизиты для подключения, Вам нужно получить их в личном кабинете на сайте CloudPayments.
 
-Пример отправки запроса на списание средств с банковской карты через 3ds:
+####Пример отправки запроса на списание средств с банковской карты через 3ds, через встроенную форму:
 ```
         Intent intent = new Intent(Launcher.this, PaymentWidget.class);
         PaymentWidget.listener = chargeTaskListener;
@@ -94,6 +97,24 @@ org.codehaus.jackson:jackson-mapper-asl:1.9.11
             public String cardHolderMessage; // Сообщение о операции
         }
 ```
+Подробнее см. ru.cloudpayments.sdk.demo.buildIn.BuildInActivity.java
+
+####Пример отправки запроса на списание средств с банковской карты через 3ds, через свою форму:
+
+```
+        ICard card = CardFactory.create(cardNumber, expDate, cvv);
+        if (card.isValidNumber()) {
+            ICharge charge = ChargeFactory.create(CustomActivity.this,
+                            Constants.publicId, "accId", "invId",
+                            card.cardCryptogram(Constants.publicId),
+                            holderName, amount, "RUB", desc,
+                            "http://example.ru");
+            charge.run(chargeTaskListener);
+        } else {
+            //CardNumber is not valid
+        }
+```
+Подробнее см. ru.cloudpayments.sdk.demo.custom.CustomActivity.java
 
 ##Ключевые моменты
 

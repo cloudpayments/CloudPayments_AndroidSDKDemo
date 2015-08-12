@@ -5,17 +5,14 @@
     android:layout_width="fill_parent"
     android:padding="10dp">
 
-
-    <Button
+    <ru.cloudpayments.sdk.demo.custom.CardDataView
+        android:id="@+id/cardDataView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pay_via_build_in_form"
-        android:onClick="onBuildInForm"/>
+        android:layout_height="wrap_content"/>
 
-    <Button
-        android:layout_marginTop="10dp"
+    <TextView
+        android:id="@+id/result"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pay_via_custom_form"
-        android:onClick="onCustomForm"/>
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
