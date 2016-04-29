@@ -5,6 +5,7 @@ import java.lang.String; /**
  */
 public interface CardDataViewListener {
 
-    void makePayment(String cardNumber, String expDate, String cvv, String holderName, double amount, String currency, String desc);
+    void makeCharge(String cardNumber, String expDate, String cvv, String holderName, double amount, String currency, String desc);
+    void makeAuth(String cardNumber, String expDate, String cvv, String holderName, double amount, String currency, String desc);
 
 }

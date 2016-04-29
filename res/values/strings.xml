@@ -7,12 +7,13 @@
     <string name="amount_hint">Введите сумму</string>
     <string name="currency_hint">Введите валюту</string>
     <string name="desc_hint">Введите назначение</string>
-    <string name="pay">Оплатить</string>
+    <string name="payment_charge">Оплатить [Charge]</string>
+    <string name="payment_auth">Оплатить [Auth]</string>
 
-    <string name="payment_not_finished">[Оплата не завершена]</string>
-    <string name="error">[Ошибка]</string>
-    <string name="payment_finished">[Оплата завершена]</string>
-    <string name="operation_canceled">[Операция отменена]</string>
+    <string name="payment_not_finished">[Оплата не завершена]\u0020</string>
+    <string name="error">[Ошибка]\u0020</string>
+    <string name="payment_finished">[Оплата завершена]\u0020</string>
+    <string name="operation_canceled">[Операция отменена]\u0020</string>
     <string name="pay_3ds">Оптатить (3ds)</string>
 
     <string name="card_number">Номер карты</string>

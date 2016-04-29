@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_height="fill_parent"
     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     android:padding="10dp">
 
     <EditText
@@ -14,10 +14,20 @@
         android:singleLine="true" />
 
     <EditText
+        android:id="@+id/edtCurrency"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:hint="@string/currency_hint"
+        android:inputType="textCapCharacters"
+        android:maxLength="3"
+        android:singleLine="true" />
+
+    <EditText
         android:id="@+id/edtDesc"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="@string/desc_hint"
         android:inputType="textCapSentences"
         android:singleLine="true" />
@@ -26,8 +36,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/pay"
-        android:onClick="onPay"/>
+        android:onClick="onPay"
+        android:text="@string/pay" />
 
     <TextView
         android:id="@+id/result"

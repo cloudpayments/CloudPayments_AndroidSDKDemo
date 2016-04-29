@@ -109,9 +109,15 @@
         android:singleLine="true" />
 
     <Button
-        android:id="@+id/btnOk"
+        android:id="@+id/btnCharge"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="@string/payment" />
+        android:text="@string/payment_charge" />
+    <Button
+        android:id="@+id/btnAuth"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/payment_auth" />
 </LinearLayout>

@@ -2,25 +2,26 @@
 
 Приложение CloudPayments_AndroidSDKDemo демонстрирует работу SDK для платформы Android с платежным шлюзом CloudPayments
 Полная информация об использовании на сайте http://cloudpayments.ru/docs/mobileSDK
+Схемы проведения платежа http://cloudpayments.ru/Docs/Integration#schemes
 
-##Установка
+##Инсталяция
 
 git clone https://github.com/cloudpayments/CloudPayments_AndroidSDKDemo.git
 
 ##Описание работы приложения с SDK CloudPayments
 
 SDK CloudPayments (CloudPaymentsAPI.framework) позволяет:
-* проводить проверку карточного номера на корректность  
+* Проводить проверку карточного номера на корректность  
 ```    
 ru.cloudpayments.sdk.ICard card = ru.cloudpayments.sdk.CardFactory.create(java.lang.String number);
 boolean card.isValidNumber();
 ```
-* определять тип платежной системы
+* Определять тип платежной системы
 ```
 ru.cloudpayments.sdk.ICard card = ru.cloudpayments.sdk.CardFactory.create(java.lang.String number);
 java.lang.String card.getType();
 ```
-* шифровать карточные данные и создавать криптограмму для отправки на сервер
+* Шифровать карточные данные и создавать криптограмму для отправки на сервер
 ```
 ru.cloudpayments.sdk.ICard card = ru.cloudpayments.sdk.CardFactory.create(java.lang.String number);
 java.lang.String card.cardCryptogram(java.lang.String publicId) throws                                                      java.io.UnsupportedEncodingException, javax.crypto.NoSuchPaddingException, java.security.NoSuchAlgorithmException,                   java.security.NoSuchProviderException, javax.crypto.BadPaddingException, javax.crypto.IllegalBlockSizeException,                     java.security.InvalidKeyException;
@@ -42,10 +43,10 @@ org.codehaus.jackson:jackson-mapper-asl:1.9.11
 
 В примере publicId это тестовые реквизиты для подключения, Вам нужно получить их в личном кабинете на сайте CloudPayments.
 
-####Пример отправки запроса на списание средств с банковской карты через 3ds, через встроенную форму:
+####Двухстадийная оплата. Пример отправки запроса на списание средств с банковской карты через 3ds, через встроенную форму:
 ```
         Intent intent = new Intent(Launcher.this, PaymentWidget.class);
-        PaymentWidget.listener = chargeTaskListener;
+        PaymentWidget.taskListener = paymentTaskListener;
         intent.putExtra("amount", amount);
         intent.putExtra("desc", desc);
         intent.putExtra("currency", currency);
@@ -57,7 +58,7 @@ org.codehaus.jackson:jackson-mapper-asl:1.9.11
 
 где
 ```        
-        private ChargeTaskListener chargeTaskListener = new ChargeTaskListener() {
+        private PaymentTaskListener paymentTaskListener = new PaymentTaskListener() {
                 @Override
                 public void success(BaseResponse baseResponse) {
                     // успешно 
@@ -101,15 +102,31 @@ org.codehaus.jackson:jackson-mapper-asl:1.9.11
 
 ####Пример отправки запроса на списание средств с банковской карты через 3ds, через свою форму:
 
+#####Одностадийная оплата
 ```
         ICard card = CardFactory.create(cardNumber, expDate, cvv);
         if (card.isValidNumber()) {
-            ICharge charge = ChargeFactory.create(CustomActivity.this,
+            IPayment paymentCharge = PaymentFactory.charge(CustomActivity.this,
                             Constants.publicId, "accId", "invId",
                             card.cardCryptogram(Constants.publicId),
-                            holderName, amount, "RUB", desc,
+                            holderName, amount, currency, desc,
                             "http://example.ru");
-            charge.run(chargeTaskListener);
+            paymentCharge.run(paymentTaskListener);
+        } else {
+            //CardNumber is not valid
+        }
+```
+
+#####Двухстадийная оплата
+```
+        ICard card = CardFactory.create(cardNumber, expDate, cvv);
+        if (card.isValidNumber()) {
+            IPayment paymentAuth = PaymentFactory.auth(CustomActivity.this,
+                            Constants.publicId, "accId", "invId",
+                            card.cardCryptogram(Constants.publicId),
+                            holderName, amount, currency, desc,
+                            "http://example.ru");
+            paymentAuth.run(paymentTaskListener);
         } else {
             //CardNumber is not valid
         }

@@ -13,7 +13,7 @@ import ru.cloudpayments.sdk.business.domain.model.billing.CardsAuthConfirmRespon
 import ru.cloudpayments.sdk.business.domain.model.billing.CardsAuthResponse;
 import ru.cloudpayments.sdk.demo.Constants;
 import ru.cloudpayments.sdk.demo.R;
-import ru.cloudpayments.sdk.view.ChargeTaskListener;
+import ru.cloudpayments.sdk.view.PaymentTaskListener;
 
 import static ru.cloudpayments.sdk.utils.Logger.log;
 
@@ -22,19 +22,17 @@ import static ru.cloudpayments.sdk.utils.Logger.log;
  */
 public class BuildInActivity extends Activity {
 
-    private ChargeTaskListener chargeTaskListener = new ChargeTaskListener() {
+    private PaymentTaskListener paymentTaskListener = new PaymentTaskListener() {
 
         @Override
         public void success(BaseResponse response) {
             log("BuildInActivity got success " + response);
             if (response instanceof CardsAuthConfirmResponse)
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_finished) + " " +
-                        ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
+                showResult(getString(R.string.payment_finished) + ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
             else if (response instanceof CardsAuthResponse) {
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_finished) + " " +
-                        ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
+                showResult(getString(R.string.payment_finished) + ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
             } else {
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_finished) + " " + response + "\n");
+                showResult(getString(R.string.payment_finished) + response + "\n");
             }
         }
 
@@ -42,27 +40,28 @@ public class BuildInActivity extends Activity {
         public void error(BaseResponse response) {
             log("BuildInActivity got error " + response);
             if (response instanceof CardsAuthConfirmResponse)
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_not_finished) + " " +
-                        ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
+                showResult(getString(R.string.payment_not_finished) + ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
             if (response instanceof CardsAuthResponse)
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_not_finished) + " " +
-                        ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
+                showResult(getString(R.string.payment_not_finished) + ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
             else
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.error) + " " + response.message + "\n");
+                showResult(getString(R.string.error) + response.message + "\n");
         }
 
         @Override
         public void cancel() {
             log("BuildInActivity got cancel");
-            ((TextView) findViewById(R.id.result)).setText(getString(R.string.operation_canceled) + "\n");
+            showResult(getString(R.string.operation_canceled) + "\n");
         }
     };
+
+    private TextView resultView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.build_in_form);
+        resultView = (TextView) findViewById(R.id.result);
     }
 
     @Override
@@ -76,7 +75,7 @@ public class BuildInActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState.containsKey("result"))
-            ((TextView) findViewById(R.id.result)).setText(savedInstanceState.getString("result"));
+            showResult(savedInstanceState.getString("result"));
     }
 
     public void onPay(View view) {
@@ -84,20 +83,28 @@ public class BuildInActivity extends Activity {
         try {
             amount = Double.parseDouble(((EditText) findViewById(R.id.edtAmount)).getText().toString());
         } catch (Exception e) {
+
+            return;
         }
 
         String desc = ((EditText) findViewById(R.id.edtDesc)).getText().toString();
+        String currency = ((EditText) findViewById(R.id.edtCurrency)).getText().toString();
 
         Intent intent = new Intent(BuildInActivity.this, PaymentWidget.class);
         intent.putExtra("amount", amount);
         intent.putExtra("desc", desc);
-        intent.putExtra("currency", Constants.currency);
+        intent.putExtra("currency", currency);
         intent.putExtra("publicId", Constants.publicId);
         intent.putExtra("invoiceId", Constants.invoiceId);
         intent.putExtra("accountId", Constants.accountId);
 
-        PaymentWidget.listener = chargeTaskListener;
+        PaymentWidget.taskListener = paymentTaskListener;
 
         startActivity(intent);
     }
+
+    public void showResult(String text){
+        resultView.setText(text);
+    }
+
 }

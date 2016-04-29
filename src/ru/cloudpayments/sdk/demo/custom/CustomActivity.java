@@ -4,25 +4,16 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import ru.cloudpayments.sdk.CardFactory;
-import ru.cloudpayments.sdk.ChargeFactory;
 import ru.cloudpayments.sdk.ICard;
-import ru.cloudpayments.sdk.ICharge;
+import ru.cloudpayments.sdk.IPayment;
+import ru.cloudpayments.sdk.PaymentFactory;
 import ru.cloudpayments.sdk.business.domain.model.BaseResponse;
 import ru.cloudpayments.sdk.business.domain.model.billing.CardsAuthConfirmResponse;
 import ru.cloudpayments.sdk.business.domain.model.billing.CardsAuthResponse;
 import ru.cloudpayments.sdk.demo.Constants;
 import ru.cloudpayments.sdk.demo.R;
-import ru.cloudpayments.sdk.view.ChargeTaskListener;
+import ru.cloudpayments.sdk.view.PaymentTaskListener;
 
 import static ru.cloudpayments.sdk.utils.Logger.log;
 
@@ -31,19 +22,17 @@ import static ru.cloudpayments.sdk.utils.Logger.log;
  */
 public class CustomActivity extends Activity {
 
-    private ChargeTaskListener chargeTaskListener = new ChargeTaskListener() {
+    private PaymentTaskListener paymentTaskListener = new PaymentTaskListener() {
 
         @Override
         public void success(BaseResponse response) {
             log("CustomActivity got success " + response);
             if (response instanceof CardsAuthConfirmResponse)
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_finished) + " " +
-                        ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
+                showResult(getString(R.string.payment_finished) + ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
             else if (response instanceof CardsAuthResponse) {
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_finished) + " " +
-                        ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
+                showResult(getString(R.string.payment_finished) + ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
             } else {
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_finished) + " " + response + "\n");
+                showResult(getString(R.string.payment_finished) + response + "\n");
             }
         }
 
@@ -51,21 +40,21 @@ public class CustomActivity extends Activity {
         public void error(BaseResponse response) {
             log("CustomActivity got error " + response);
             if (response instanceof CardsAuthConfirmResponse)
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_not_finished) + " " +
-                        ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
+                showResult(getString(R.string.payment_not_finished) + ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
             if (response instanceof CardsAuthResponse)
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.payment_not_finished) + " " +
-                        ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
+                showResult(getString(R.string.payment_not_finished) + ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
             else
-                ((TextView) findViewById(R.id.result)).setText(getString(R.string.error) + " " + response.message + "\n");
+                showResult(getString(R.string.error) + response.message + "\n");
         }
 
         @Override
         public void cancel() {
             log("CustomActivity got cancel");
-            ((TextView) findViewById(R.id.result)).setText(getString(R.string.operation_canceled) + "\n");
+            showResult(getString(R.string.operation_canceled) + "\n");
         }
     };
+
+    private TextView resultView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,28 +62,67 @@ public class CustomActivity extends Activity {
 
         setContentView(R.layout.custom_activity);
 
+        resultView = (TextView) findViewById(R.id.result);
         ((CardDataView) findViewById(R.id.cardDataView)).setCardDataViewListener(new CardDataViewListener() {
             @Override
-            public void makePayment(String cardNumber, String expDate, String cvv, String holderName, double amount, String currency, String desc) {
+            public void makeCharge(String cardNumber, String expDate, String cvv, String holderName, double amount, String currency, String desc) {
 
                 ICard card = CardFactory.create(cardNumber, expDate, cvv);
-                if (card.isValidNumber()) {
-
-                    try {
-                        String cardCrypto = card.cardCryptogram(Constants.publicId);
-                        ICharge charge = ChargeFactory.create(CustomActivity.this,
-                                Constants.publicId, "accId", "invId", cardCrypto,
+                try {
+                    String cardCryptogram = card.cardCryptogram(Constants.publicId);
+                    if (card.isValidNumber()) {
+                        IPayment paymentCharge = PaymentFactory.charge(CustomActivity.this,
+                                Constants.publicId, "accId", "invId",
+                                cardCryptogram,
                                 holderName, amount, currency, desc,
                                 "http://example.ru");
-                        charge.run(chargeTaskListener);
-                    } catch (Exception e) {
-                        ((TextView) findViewById(R.id.result)).setText("Error get card cryptogram");
+                        paymentCharge.run(paymentTaskListener);
+                    } else {
+                        showResult("CardNumber is not valid");
                     }
+                } catch (Exception e) {
+                    showResult("Error get card cryptogram");
+                }
+            }
 
-                } else {
-                    ((TextView) findViewById(R.id.result)).setText("CardNumber is not valid");
+            @Override
+            public void makeAuth(String cardNumber, String expDate, String cvv, String holderName, double amount, String currency, String desc) {
+
+                ICard card = CardFactory.create(cardNumber, expDate, cvv);
+                try {
+                    String cardCryptogram = card.cardCryptogram(Constants.publicId);
+                    if (card.isValidNumber()) {
+                        IPayment paymentAuth = PaymentFactory.auth(CustomActivity.this,
+                                Constants.publicId, "accId", "invId",
+                                cardCryptogram,
+                                holderName, amount, currency, desc,
+                                "http://example.ru");
+                        paymentAuth.run(paymentTaskListener);
+                    } else {
+                        showResult("CardNumber is not valid");
+                    }
+                } catch (Exception e) {
+                    showResult("Error get card cryptogram");
                 }
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState = new Bundle();
+        outState.putString("result", ((TextView) findViewById(R.id.result)).getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.containsKey("result"))
+            ((TextView) findViewById(R.id.result)).setText(savedInstanceState.getString("result"));
+    }
+
+    public void showResult(String text){
+        resultView.setText(text);
     }
 }
