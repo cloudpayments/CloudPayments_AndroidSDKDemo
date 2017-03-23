@@ -89,13 +89,15 @@ org.codehaus.jackson:jackson-mapper-asl:1.9.11
         }
         
         public class CardTransaction {
-            public int transactionId;        // Id операции
-            public String cardHolderMessage; // Сообщение о операции
+            public int transactionId;
+            public String cardHolderMessage;
+            public String accountId;
+            public String token;
         }
         
         public class CardAuth extends CardTransaction {
-            public int transactionId;        // Id операции
-            public String cardHolderMessage; // Сообщение о операции
+            public String paReq;
+            public String acsUrl;
         }
 ```
 Подробнее см. ru.cloudpayments.sdk.demo.buildIn.BuildInActivity.java
