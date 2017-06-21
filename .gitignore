@@ -15,3 +15,6 @@ local.properties
 .gradle
 gradlew*
 manifest-merger-release-report.txt
+
+#mac specific
+.DS_Store
