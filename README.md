@@ -60,11 +60,11 @@ java.lang.String card.cardCryptogram(java.lang.String publicId) throws
         Intent intent = new Intent(Launcher.this, PaymentWidget.class);
         PaymentWidget.taskListener = paymentTaskListener;
         intent.putExtra(PaymentWidget.EXTRA_AMOUNT, amount); // Сумма оплаты
-        intent.putExtra(PaymentWidget.EXTRA_DESCRIPTION, desc);
-        intent.putExtra(PaymentWidget.EXTRA_CURRENCY, currency);
-        intent.putExtra(PaymentWidget.EXTRA_PUBLIC_ID, Constants.publicId);
-        intent.putExtra(PaymentWidget.EXTRA_INVOICE_ID, Constants.invoiceId);
-        intent.putExtra(PaymentWidget.EXTRA_ACCOUNT_ID, Constants.accountId);
+        intent.putExtra(PaymentWidget.EXTRA_DESCRIPTION, desc); // Описание
+        intent.putExtra(PaymentWidget.EXTRA_CURRENCY, currency); // Код валюты
+        intent.putExtra(PaymentWidget.EXTRA_PUBLIC_ID, Constants.publicId); // Ваш public ID
+        intent.putExtra(PaymentWidget.EXTRA_INVOICE_ID, Constants.invoiceId); // ID заказа в вашей системе
+        intent.putExtra(PaymentWidget.EXTRA_ACCOUNT_ID, Constants.accountId); // ID покупателя в вашей системе
         startActivity(intent);
 ```
 
