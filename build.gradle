@@ -15,7 +15,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.2'
     }
 }
@@ -24,9 +24,6 @@ apply plugin: 'com.android.application'
 
 dependencies {
     compile(name: 'CloudPayments_AndroidSDK', ext: 'aar')
-    compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
-    compile 'org.codehaus.jackson:jackson-jaxrs:1.9.13'
-    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 }
 
 repositories {
@@ -41,7 +38,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 18
         targetSdkVersion 25
 
         jackOptions {

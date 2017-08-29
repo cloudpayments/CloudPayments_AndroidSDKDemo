@@ -1,123 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/card_number" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtCardNumber"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/card_number_hint"
-        android:inputType="number"
-        android:maxLength="16"
-        android:singleLine="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/card_number" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/card_exp" />
+        <EditText
+            android:id="@+id/edtCardNumber"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/card_number_hint"
+            android:inputType="number"
+            android:maxLength="16"
+            android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/edtCardExp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/card_exp_hint"
-        android:inputType="number|phone"
-        android:maxLength="4"
-        android:singleLine="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/card_exp" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/card_holder_name" />
+        <EditText
+            android:id="@+id/edtCardExp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/card_exp_hint"
+            android:inputType="number|phone"
+            android:maxLength="4"
+            android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/edtCardHolderName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/card_holder_name_hint"
-        android:inputType="textCapCharacters"
-        android:singleLine="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/card_holder_name" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/card_cvv" />
+        <EditText
+            android:id="@+id/edtCardHolderName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/card_holder_name_hint"
+            android:inputType="textCapCharacters"
+            android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/edtCardCvv"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/card_cvv_hint"
-        android:inputType="number"
-        android:maxLength="3"
-        android:singleLine="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/card_cvv" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/amount" />
+        <EditText
+            android:id="@+id/edtCardCvv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/card_cvv_hint"
+            android:inputType="number"
+            android:maxLength="3"
+            android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/edtAmount"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/amount_hint"
-        android:inputType="numberDecimal"
-        android:maxLength="6"
-        android:singleLine="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/amount" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/currency" />
+        <EditText
+            android:id="@+id/edtAmount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/amount_hint"
+            android:inputType="numberDecimal"
+            android:maxLength="6"
+            android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/edtCurrency"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/currency_hint"
-        android:inputType="textCapCharacters"
-        android:maxLength="3"
-        android:singleLine="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/currency" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/desc" />
+        <EditText
+            android:id="@+id/edtCurrency"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/currency_hint"
+            android:inputType="textCapCharacters"
+            android:maxLength="3"
+            android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/edtDesc"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/desc_hint"
-        android:inputType="textCapCharacters"
-        android:singleLine="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/desc" />
 
-    <Button
-        android:id="@+id/btnCharge"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/payment_charge" />
-    <Button
-        android:id="@+id/btnAuth"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/payment_auth" />
-</LinearLayout>
+        <EditText
+            android:id="@+id/edtDesc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/desc_hint"
+            android:inputType="textCapCharacters"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/btnCharge"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/payment_charge" />
+
+        <Button
+            android:id="@+id/btnAuth"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="@string/payment_auth" />
+    </LinearLayout>
+</ScrollView>

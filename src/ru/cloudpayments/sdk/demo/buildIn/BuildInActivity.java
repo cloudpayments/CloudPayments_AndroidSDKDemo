@@ -91,12 +91,12 @@ public class BuildInActivity extends Activity {
         String currency = ((EditText) findViewById(R.id.edtCurrency)).getText().toString();
 
         Intent intent = new Intent(BuildInActivity.this, PaymentWidget.class);
-        intent.putExtra("amount", amount);
-        intent.putExtra("desc", desc);
-        intent.putExtra("currency", currency);
-        intent.putExtra("publicId", Constants.publicId);
-        intent.putExtra("invoiceId", Constants.invoiceId);
-        intent.putExtra("accountId", Constants.accountId);
+        intent.putExtra(PaymentWidget.EXTRA_AMOUNT, amount);
+        intent.putExtra(PaymentWidget.EXTRA_DESCRIPTION, desc);
+        intent.putExtra(PaymentWidget.EXTRA_CURRENCY, currency);
+        intent.putExtra(PaymentWidget.EXTRA_PUBLIC_ID, Constants.publicId);
+        intent.putExtra(PaymentWidget.EXTRA_INVOICE_ID, Constants.invoiceId);
+        intent.putExtra(PaymentWidget.EXTRA_ACCOUNT_ID, Constants.accountId);
 
         PaymentWidget.taskListener = paymentTaskListener;
 

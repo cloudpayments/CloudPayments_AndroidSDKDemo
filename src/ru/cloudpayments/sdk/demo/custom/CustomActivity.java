@@ -17,42 +17,9 @@ import ru.cloudpayments.sdk.view.PaymentTaskListener;
 
 import static ru.cloudpayments.sdk.utils.Logger.log;
 
-/**
- * Created by Nastya on 12.08.2015.
- */
 public class CustomActivity extends Activity {
 
-    private PaymentTaskListener paymentTaskListener = new PaymentTaskListener() {
-
-        @Override
-        public void success(BaseResponse response) {
-            log("CustomActivity got success " + response);
-            if (response instanceof CardsAuthConfirmResponse)
-                showResult(getString(R.string.payment_finished) + ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
-            else if (response instanceof CardsAuthResponse) {
-                showResult(getString(R.string.payment_finished) + ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
-            } else {
-                showResult(getString(R.string.payment_finished) + response + "\n");
-            }
-        }
-
-        @Override
-        public void error(BaseResponse response) {
-            log("CustomActivity got error " + response);
-            if (response instanceof CardsAuthConfirmResponse)
-                showResult(getString(R.string.payment_not_finished) + ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
-            if (response instanceof CardsAuthResponse)
-                showResult(getString(R.string.payment_not_finished) + ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
-            else
-                showResult(getString(R.string.error) + response.message + "\n");
-        }
-
-        @Override
-        public void cancel() {
-            log("CustomActivity got cancel");
-            showResult(getString(R.string.operation_canceled) + "\n");
-        }
-    };
+    private PaymentTaskListener paymentTaskListener;
 
     private TextView resultView;
 
@@ -61,6 +28,38 @@ public class CustomActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.custom_activity);
+
+        paymentTaskListener = new PaymentTaskListener() {
+
+            @Override
+            public void success(BaseResponse response) {
+                log("CustomActivity got success " + response);
+                if (response instanceof CardsAuthConfirmResponse)
+                    showResult(getString(R.string.payment_finished) + ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
+                else if (response instanceof CardsAuthResponse) {
+                    showResult(getString(R.string.payment_finished) + ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
+                } else {
+                    showResult(getString(R.string.payment_finished) + response + "\n");
+                }
+            }
+
+            @Override
+            public void error(BaseResponse response) {
+                log("CustomActivity got error " + response);
+                if (response instanceof CardsAuthConfirmResponse)
+                    showResult(getString(R.string.payment_not_finished) + ((CardsAuthConfirmResponse) response).transaction.cardHolderMessage + "\n");
+                if (response instanceof CardsAuthResponse)
+                    showResult(getString(R.string.payment_not_finished) + ((CardsAuthResponse) response).auth.cardHolderMessage + "\n");
+                else
+                    showResult(getString(R.string.error) + response.message + "\n");
+            }
+
+            @Override
+            public void cancel() {
+                log("CustomActivity got cancel");
+                showResult(getString(R.string.operation_canceled) + "\n");
+            }
+        };
 
         resultView = (TextView) findViewById(R.id.result);
         ((CardDataView) findViewById(R.id.cardDataView)).setCardDataViewListener(new CardDataViewListener() {
@@ -72,9 +71,14 @@ public class CustomActivity extends Activity {
                     String cardCryptogram = card.cardCryptogram(Constants.publicId);
                     if (card.isValidNumber()) {
                         IPayment paymentCharge = PaymentFactory.charge(CustomActivity.this,
-                                Constants.publicId, "accId", "invId",
+                                Constants.publicId,
+                                "accId",
+                                "invId",
                                 cardCryptogram,
-                                holderName, amount, currency, desc,
+                                holderName,
+                                amount,
+                                currency,
+                                desc,
                                 "http://example.ru");
                         paymentCharge.run(paymentTaskListener);
                     } else {
@@ -93,9 +97,14 @@ public class CustomActivity extends Activity {
                     String cardCryptogram = card.cardCryptogram(Constants.publicId);
                     if (card.isValidNumber()) {
                         IPayment paymentAuth = PaymentFactory.auth(CustomActivity.this,
-                                Constants.publicId, "accId", "invId",
+                                Constants.publicId,
+                                "accId",
+                                "invId",
                                 cardCryptogram,
-                                holderName, amount, currency, desc,
+                                holderName,
+                                amount,
+                                currency,
+                                desc,
                                 "http://example.ru");
                         paymentAuth.run(paymentTaskListener);
                     } else {
