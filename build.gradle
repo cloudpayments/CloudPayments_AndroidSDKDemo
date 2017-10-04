@@ -1,35 +1,28 @@
-allprojects {
+buildscript {
     repositories {
-        maven { url 'libs' }
         mavenCentral()
         flatDir {
             dirs 'libs'
         }
     }
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.2'
     }
 }
 
 apply plugin: 'com.android.application'
 
-dependencies {
-    compile(name: 'CloudPayments_AndroidSDK', ext: 'aar')
-}
-
 repositories {
-    flatDir{
+    mavenCentral()
+    flatDir {
         dirs 'libs'
     }
+}
+
+dependencies {
+    compile(name: 'CloudPayments_AndroidSDK', ext: 'aar')
+
 }
 
 android {
@@ -78,5 +71,4 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
 }
