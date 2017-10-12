@@ -65,6 +65,8 @@ java.lang.String card.cardCryptogram(java.lang.String publicId) throws
         intent.putExtra(PaymentWidget.EXTRA_PUBLIC_ID, Constants.publicId); // Ваш public ID
         intent.putExtra(PaymentWidget.EXTRA_INVOICE_ID, Constants.invoiceId); // ID заказа в вашей системе
         intent.putExtra(PaymentWidget.EXTRA_ACCOUNT_ID, Constants.accountId); // ID покупателя в вашей системе
+        intent.putExtra(PaymentWidget.EXTRA_DATA, "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}"); // Произвольный набор параметров
+
         startActivity(intent);
 ```
 
@@ -125,7 +127,8 @@ java.lang.String card.cardCryptogram(java.lang.String publicId) throws
                             Constants.publicId, "accId", "invId",
                             card.cardCryptogram(Constants.publicId),
                             holderName, amount, currency, desc,
-                            "http://example.ru");
+                            "http://example.ru",
+                            "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}");
             paymentCharge.run(paymentTaskListener);
         } else {
             //CardNumber is not valid
@@ -141,7 +144,8 @@ java.lang.String card.cardCryptogram(java.lang.String publicId) throws
                             Constants.publicId, "accId", "invId",
                             card.cardCryptogram(Constants.publicId),
                             holderName, amount, currency, desc,
-                            "http://example.ru");
+                            "http://example.ru",
+                            "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}");
             paymentAuth.run(paymentTaskListener);
         } else {
             //CardNumber is not valid

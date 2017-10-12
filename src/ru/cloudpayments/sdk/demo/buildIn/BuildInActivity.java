@@ -91,12 +91,13 @@ public class BuildInActivity extends Activity {
         String currency = ((EditText) findViewById(R.id.edtCurrency)).getText().toString();
 
         Intent intent = new Intent(BuildInActivity.this, PaymentWidget.class);
-        intent.putExtra(PaymentWidget.EXTRA_AMOUNT, amount);
-        intent.putExtra(PaymentWidget.EXTRA_DESCRIPTION, desc);
-        intent.putExtra(PaymentWidget.EXTRA_CURRENCY, currency);
-        intent.putExtra(PaymentWidget.EXTRA_PUBLIC_ID, Constants.publicId);
-        intent.putExtra(PaymentWidget.EXTRA_INVOICE_ID, Constants.invoiceId);
-        intent.putExtra(PaymentWidget.EXTRA_ACCOUNT_ID, Constants.accountId);
+        intent.putExtra(PaymentWidget.EXTRA_AMOUNT, amount); // Сумма оплаты
+        intent.putExtra(PaymentWidget.EXTRA_DESCRIPTION, desc); // Описание
+        intent.putExtra(PaymentWidget.EXTRA_CURRENCY, currency); // Код валюты
+        intent.putExtra(PaymentWidget.EXTRA_PUBLIC_ID, Constants.publicId); // Ваш public ID
+        intent.putExtra(PaymentWidget.EXTRA_INVOICE_ID, Constants.invoiceId); // ID заказа в вашей системе
+        intent.putExtra(PaymentWidget.EXTRA_ACCOUNT_ID, Constants.accountId); // ID покупателя в вашей системе
+        intent.putExtra(PaymentWidget.EXTRA_DATA, "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}"); // Произвольный набор параметров
 
         PaymentWidget.taskListener = paymentTaskListener;
 

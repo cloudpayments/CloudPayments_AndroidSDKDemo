@@ -79,7 +79,8 @@ public class CustomActivity extends Activity {
                                 amount,
                                 currency,
                                 desc,
-                                "http://example.ru");
+                                "http://example.ru",
+                                "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}");
                         paymentCharge.run(paymentTaskListener);
                     } else {
                         showResult("CardNumber is not valid");
@@ -105,7 +106,8 @@ public class CustomActivity extends Activity {
                                 amount,
                                 currency,
                                 desc,
-                                "http://example.ru");
+                                "http://example.ru",
+                                "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}");
                         paymentAuth.run(paymentTaskListener);
                     } else {
                         showResult("CardNumber is not valid");
