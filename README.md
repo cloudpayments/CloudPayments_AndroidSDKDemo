@@ -55,7 +55,7 @@ java.lang.String card.cardCryptogram(java.lang.String publicId) throws
 
 В примере publicId это тестовые реквизиты для подключения, Вам нужно получить их в личном кабинете на сайте CloudPayments.
 
-##### Двухстадийная оплата. Пример отправки запроса на списание средств с банковской карты через 3ds, через встроенную форму:
+##### Пример отправки запроса на списание средств с банковской карты через 3ds, через встроенную форму:
 ```java
         Intent intent = new Intent(Launcher.this, PaymentWidget.class);
         PaymentWidget.taskListener = paymentTaskListener;
@@ -66,6 +66,7 @@ java.lang.String card.cardCryptogram(java.lang.String publicId) throws
         intent.putExtra(PaymentWidget.EXTRA_INVOICE_ID, Constants.invoiceId); // ID заказа в вашей системе
         intent.putExtra(PaymentWidget.EXTRA_ACCOUNT_ID, Constants.accountId); // ID покупателя в вашей системе
         intent.putExtra(PaymentWidget.EXTRA_DATA, "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}"); // Произвольный набор параметров
+        intent.putExtra(PaymentWidget.EXTRA_TYPE, PaymentWidget.TYPE_AUTH); // Тип платежа: TYPE_CHARGE (одностадийный) или TYPE_AUTH (двухстадийный)
 
         startActivity(intent);
 ```
@@ -127,7 +128,6 @@ java.lang.String card.cardCryptogram(java.lang.String publicId) throws
                             Constants.publicId, "accId", "invId",
                             card.cardCryptogram(Constants.publicId),
                             holderName, amount, currency, desc,
-                            "http://example.ru",
                             "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}");
             paymentCharge.run(paymentTaskListener);
         } else {
@@ -144,7 +144,6 @@ java.lang.String card.cardCryptogram(java.lang.String publicId) throws
                             Constants.publicId, "accId", "invId",
                             card.cardCryptogram(Constants.publicId),
                             holderName, amount, currency, desc,
-                            "http://example.ru",
                             "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}");
             paymentAuth.run(paymentTaskListener);
         } else {

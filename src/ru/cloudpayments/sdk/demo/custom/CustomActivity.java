@@ -79,7 +79,6 @@ public class CustomActivity extends Activity {
                                 amount,
                                 currency,
                                 desc,
-                                "http://example.ru",
                                 "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}");
                         paymentCharge.run(paymentTaskListener);
                     } else {
@@ -106,7 +105,6 @@ public class CustomActivity extends Activity {
                                 amount,
                                 currency,
                                 desc,
-                                "http://example.ru",
                                 "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}");
                         paymentAuth.run(paymentTaskListener);
                     } else {

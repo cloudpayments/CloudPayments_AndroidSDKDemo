@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:onClick="onPay"
-        android:text="@string/pay" />
+        android:text="@string/payment" />
 
     <TextView
         android:id="@+id/result"

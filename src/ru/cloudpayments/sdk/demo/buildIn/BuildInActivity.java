@@ -98,6 +98,7 @@ public class BuildInActivity extends Activity {
         intent.putExtra(PaymentWidget.EXTRA_INVOICE_ID, Constants.invoiceId); // ID заказа в вашей системе
         intent.putExtra(PaymentWidget.EXTRA_ACCOUNT_ID, Constants.accountId); // ID покупателя в вашей системе
         intent.putExtra(PaymentWidget.EXTRA_DATA, "{\"age\":27,\"name\":\"Ivan\",\"phone\":\"+79998881122\"}"); // Произвольный набор параметров
+        intent.putExtra(PaymentWidget.EXTRA_TYPE, PaymentWidget.TYPE_AUTH); // Тип платежа: TYPE_CHARGE (одностадийный) или TYPE_AUTH (двухстадийный)
 
         PaymentWidget.taskListener = paymentTaskListener;
 

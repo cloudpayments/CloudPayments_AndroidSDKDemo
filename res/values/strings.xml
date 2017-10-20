@@ -7,8 +7,7 @@
     <string name="amount_hint">Введите сумму</string>
     <string name="currency_hint">Введите валюту</string>
     <string name="desc_hint">Введите назначение</string>
-    <string name="payment_charge">Оплатить [Charge]</string>
-    <string name="payment_auth">Оплатить [Auth]</string>
+    <string name="payment">Оплатить</string>
 
     <string name="payment_not_finished">[Оплата не завершена]\u0020</string>
     <string name="error">[Ошибка]\u0020</string>
@@ -24,7 +23,8 @@
     <string name="card_exp_hint">mmyy</string>
     <string name="card_holder_name_hint">Имя деражателя карты</string>
     <string name="card_cvv_hint">***</string>
-    <string name="payment">Оплата</string>
+    <string name="payment_charge">Оплатить [Charge]</string>
+    <string name="payment_auth">Оплатить [Auth]</string>
 
     <string name="enter_card_number">Введите номер карты</string>
     <string name="enter_exp">Введите срок действия карты</string>

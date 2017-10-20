@@ -22,7 +22,6 @@ repositories {
 
 dependencies {
     compile(name: 'CloudPayments_AndroidSDK', ext: 'aar')
-
 }
 
 android {
